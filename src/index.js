@@ -619,6 +619,12 @@ export default class extends Component {
     this.scrollView = view;
   }
 
+  onPageScrollStateChanged = state => {
+    if (state === 'dragging') {
+      return this.onScrollBegin()
+    }
+  }
+
   renderScrollView = pages => {
     if (Platform.OS === 'ios') {
       return (
@@ -640,6 +646,7 @@ export default class extends Component {
         {...this.props}
         initialPage={this.props.loop ? this.state.index + 1 : this.state.index}
         onPageSelected={this.onScrollEnd}
+        onPageScrollStateChanged={this.onPageScrollStateChanged}
         key={pages.length}
         style={[styles.wrapperAndroid, this.props.style]}>
         {pages}
